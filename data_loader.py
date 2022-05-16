@@ -1,17 +1,15 @@
 from os import listdir
 from typing import List
 import pandas as pd
-import os
 
-class Data_loader:
-    
+class Data_loader:  
     
     def __init__(self):
         self.log_segment_info_path = '../prev_src/log_segment_info/'
         self.use_cols = ['mercX', 'mercY']
         self.users = ['0mnEB226qqgHE79KLEfxRj6fiEK2',
                       '9z6F6ewGNzV4a6z0vpenjZH21Ar1',
-                      ]
+                     ]
         
     def load_datasets(self) -> List[pd.DataFrame]:
         data_list = []

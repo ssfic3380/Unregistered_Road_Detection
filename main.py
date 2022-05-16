@@ -8,5 +8,5 @@ if __name__ == "__main__":
     df_list = loader.load_datasets()
     
     # 전처리 하기
-    preprocessor = Preprocessor()
+    preprocessor = Preprocessor(df_list)
     preprocessor.set_random_seed()
