@@ -7,7 +7,7 @@ class Data_loader:
     
     
     def __init__(self):
-        self.log_segement_info_path = '../prev_src/log_segment_info/'
+        self.log_segment_info_path = '../prev_src/log_segment_info/'
         self.use_cols = ['mercX', 'mercY']
         self.users = ['0mnEB226qqgHE79KLEfxRj6fiEK2',
                       '9z6F6ewGNzV4a6z0vpenjZH21Ar1',
@@ -17,7 +17,7 @@ class Data_loader:
         data_list = []
         
         for user in self.users:
-            files_dir = self.log_segement_info_path + user
+            files_dir = self.log_segment_info_path + user
             for file_name in listdir(files_dir):
        
                 # log 파일이 아닐 경우 continue
