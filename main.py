@@ -12,6 +12,7 @@ if __name__ == "__main__":
     # 전처리 하기
     preprocessor = Preprocessor(dataframe_list)
     preprocessor.set_random_seed()
+    preprocessor.apply_scaling(dataframe_list, '추가행')
     print(f"✅ Data preprocess done")
     
     # data 길이의 분포 알아보기
@@ -23,10 +24,3 @@ if __name__ == "__main__":
     padded_data_list = preprocessor.add_padding()
     
     print(f"❗ Sample : <data_list[0].index> == {dataframe_list[0].index}")
-
-    
-
-
-    
-
-    

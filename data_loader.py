@@ -8,8 +8,8 @@ class Data_loader:
         self.log_segment_info_path = '../prev_src/log_segment_info/'
         self.use_cols = ['mercX', 'mercY']
         self.users_hash = ['0mnEB226qqgHE79KLEfxRj6fiEK2',
-                            '9z6F6ewGNzV4a6z0vpenjZH21Ar1',
-                            ]
+                           '9z6F6ewGNzV4a6z0vpenjZH21Ar1',
+                          ]
         
     def load_datasets(self) -> List[pd.DataFrame]:
         data_list = []
