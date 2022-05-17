@@ -3,3 +3,5 @@ conda install tensorflow
 conda install pandas
 conda install seaborn
 conda install kde
+conda install keras
+conda install scikit-learn
