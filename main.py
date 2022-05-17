@@ -1,5 +1,6 @@
 from data_loader import Data_loader
 from preprocessor import Preprocessor
+from plotter import Plotter
 
 if __name__ == "__main__":
     
@@ -12,4 +13,13 @@ if __name__ == "__main__":
     preprocessor = Preprocessor(df_list)
     preprocessor.set_random_seed()
     
-    
+    # data 길이의 분포 알아보기
+    plotter = Plotter(df_list)
+    plotter.plot_distribution()
+
+
+    # 선택된 길이에 맞춰서 padding 수행
+    # max_length = 6400
+    # padded_data_list = add_padding(data_list, max_length)
+
+    # data_list[0].index
