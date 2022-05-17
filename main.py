@@ -6,20 +6,27 @@ if __name__ == "__main__":
     
     # 데이터 불러오기
     loader = Data_loader()
-    df_list = loader.load_datasets()
+    dataframe_list = loader.load_datasets()
     print(f"✅ Data load done")
     
     # 전처리 하기
-    preprocessor = Preprocessor(df_list)
+    preprocessor = Preprocessor(dataframe_list)
     preprocessor.set_random_seed()
+    print(f"✅ Data preprocess done")
     
     # data 길이의 분포 알아보기
-    plotter = Plotter(df_list)
+    plotter = Plotter(dataframe_list)
     plotter.plot_distribution()
-
-
+    print(f"✅ Data visualize done")
+    
     # 선택된 길이에 맞춰서 padding 수행
-    # max_length = 6400
-    # padded_data_list = add_padding(data_list, max_length)
+    padded_data_list = preprocessor.add_padding()
+    
+    print(f"❗ Sample : <data_list[0].index> == {dataframe_list[0].index}")
 
-    # data_list[0].index
+    
+
+
+    
+
+    

@@ -13,7 +13,7 @@ class Plotter:
 
     def plot_distribution(self) -> None:
         # segment 길이 추출
-        data_len_list = [len(data) for data in self.data_list]
+        data_len_list = [len(data) for data in self.dataframe_list]
         
         # plot matplotlib histogram
         bins = find_bins(data_len_list, 200.0)
@@ -21,7 +21,13 @@ class Plotter:
         plt.show()
         
         # plot seaborn histogram
-        sns.histplot(data_len_list, kde=True, stat="count", linewidth=0, bins=bins)
+        sns.histplot(
+            data_len_list,
+            kde=True,
+            stat="count",
+            linewidth=0,
+            bins=bins
+            )
         plt.show()
         
         # 가우시안 커널 밀도 추정
