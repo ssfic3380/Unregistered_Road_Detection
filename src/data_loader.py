@@ -6,7 +6,7 @@ class Data_loader:
     
     def __init__(self):
         self.log_segment_info_path = '../prev_src/log_segment_info/'
-        self.use_cols = ['mercX', 'mercY']
+        self.use_cols = ['mercX', 'mercY', 'latitude', 'longitude', 'direction', 'seg_lat1', 'seg_long1', 'seg_lat2', 'seg_long2']
         self.users_hash = ['01WPXP7OfDQtMeFqczOs0yoKms32',
                            'OMmQkOhTgUfNdgJ6Hx9EPe7zReg1',
                            '2Ea7BdHDdPbCo4XngUzyIX2yBou1',
@@ -37,7 +37,8 @@ class Data_loader:
                            'cQfrq9eo6kYvaiBb09zmde8XjrD3',
                            'yjCBTfEVL0dwmUFzU3GvqroV0XC3',
                            'wQmN5JirFEdKQb00Cnaz7CvmYOp1']
-        
+
+
     def load_datasets(self) -> List[pd.DataFrame]:
         dataframe_list = []
         
@@ -45,25 +46,29 @@ class Data_loader:
             files_dir = self.log_segment_info_path + user_hash
             for file_name in listdir(files_dir):
        
-                # log 파일이 아닐 경우 continue
+                # skip if it is not log file
                 if 'segment' not in file_name: 
                     continue
                 
-                # log 파일 load
+                # load log files
                 file_path = "/".join([files_dir, file_name])
                 file_path = f"{files_dir}/{file_name}"
                 try:
                     file_df = pd.read_csv(file_path, usecols=self.use_cols)
-                    # log의 길이가 0이면 스킵
+                    # skip if log length is zero
                     if len(file_df) == 0:
                         print(f"❗ Warning: [{file_path}]'s log length is zero")
                         continue
+                    # delete NaN
+                    file_df = file_df.fillna(0)
+                    # add in dataframe_list
                     dataframe_list.append(file_df)
                 except Exception as error_message:
                     print(error_message)
                     
         return dataframe_list
-    
+
+
     def split_datasets(self, data_frame_list:pd.DataFrame, train_ratio: float) -> Tuple[pd.DataFrame, pd.DataFrame]:
         train_end_idx = int(len(data_frame_list) * train_ratio)
         train_datasets = data_frame_list[:train_end_idx]

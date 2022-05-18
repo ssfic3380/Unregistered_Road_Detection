@@ -4,25 +4,21 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow import keras
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.8)#device_count={'GPU':1}
-)
 
-from keras.layers import Input, Dropout, Dense, LSTM, TimeDistributed, RepeatVector, Masking, Embedding
+from keras.layers import Input, Dense, LSTM, TimeDistributed, RepeatVector, Masking
 from keras.models import Model
-from keras import regularizers
-from keras.preprocessing.sequence import pad_sequences
 
 
 class Modeller:
     # This class creates an LSTM model
     # return_sequences=True: decoder의 input에 encoder의 모든 output이 각각 사용됨
-    # RepeadVector: decoder의 input에 encoder의 제일 마지막 output만 사용됨
+    # RepeatVector: decoder의 input에 encoder의 제일 마지막 output만 사용됨
     
     def __init__(self, dataframe_list: List[pd.DataFrame]):
         self.dataframe_list = dataframe_list
         self.activation_func = 'relu' # could be 'relu', 'tanh', 'sigmoid'
-        self.n_epochs = 1
-        self.batch_size = 20
+        self.n_epochs = 100
+        self.batch_size = 100
         
         
     def get_model(self) -> tf.keras.Model:
@@ -66,7 +62,7 @@ class Modeller:
     
     
     def get_prediction_of_model(self, model: tf.keras.Model) -> None:
-        ## 모델의 예측값 확인
+        # get prediction of model
         xhat = model.predict(self.dataframe_list, verbose=0)
         print('---Predicted---')
         print(xhat)
@@ -75,7 +71,7 @@ class Modeller:
     
     
     def evaluate_model(self, model: tf.keras.Model) -> None:
-        # 모델 평가하기
+        # evaluate model
         loss_and_metrics = model.evaluate(self.dataframe_list, 
                                           self.dataframe_list,
                                           batch_size=self.batch_size

@@ -15,9 +15,8 @@ class Plotter:
         self.mean = statistics.mean(self.data_len_list)
         self.std = statistics.stdev(self.data_len_list)
 
-    def plot_distribution(self) -> None:
-        # segment 길이 추출
-        
+
+    def plot_distribution(self) -> None:        
         # plot matplotlib histogram
         bins = find_bins(self.data_len_list, 200.0)
         plt.hist(self.data_len_list, bins=bins)
@@ -30,7 +29,11 @@ class Plotter:
         plt.ylabel('Count')
         plt.title('Histogram')
         plt.show()
-        
+
+    def get_length(self) -> int:
+        return int(self.mean + 0.5*self.std)
+
+
 def find_bins(observations: List, width: float) -> np.ndarray:
     minimmum = np.min(observations)
     maximmum = np.max(observations)

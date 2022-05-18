@@ -17,11 +17,17 @@ class Preprocessor:
             "robust": RobustScaler  
         }
         
+
     def set_random_seed(self) -> None:
         # set random seed
         np.random.seed(self.random_seed)
         tf.random.set_seed(self.random_seed)
-        
+
+
+    def set_padding_max_length(self, length: int) -> None:
+        self.padding_max_length = length
+
+
     def add_padding(self, data_frame_list: List[pd.DataFrame]) -> List[pd.DataFrame]:
         padded_data_list = pad_sequences(
             data_frame_list,
@@ -30,8 +36,9 @@ class Preprocessor:
             dtype='float64'
             )
         return padded_data_list
-    
-    def apply_scaling(self, dataframe_list: List[pd.DataFrame], scaler_name:str) -> List[pd.DataFrame]:
+
+
+    def apply_scaling(self, dataframe_list: List[pd.DataFrame], scaler_name: str) -> List[pd.DataFrame]:
         assert scaler_name in self.scaler_name2scaler_class.keys(), f"❗ Wrong input : {self.scaler_name2scaler_class.keys()} could be"
         selected_scaler_class = self.scaler_name2scaler_class.get(scaler_name)
         scaler = selected_scaler_class()
@@ -41,13 +48,14 @@ class Preprocessor:
              df_length_list.append(len(df))
              
         concated_df = pd.concat(dataframe_list, axis=0) # row-wise concatenate dataframe list
-        print(f"◽ Max X : {concated_df['mercX'].max()}")
-        print(f"◽ Min X : {concated_df['mercX'].min()}")
-        print(f"◽ Max Y : {concated_df['mercY'].max()}")
-        print(f"◽ Min Y : {concated_df['mercY'].min()}")
+
+        concated_df_column_list = concated_df.columns.values.tolist()
+        for column in concated_df_column_list:
+            print(f"◽ Max {column} : {concated_df[column].max()}")
+            print(f"◽ Min {column} : {concated_df[column].min()}")
 
         scaled_concated_ndarray = scaler.fit_transform(concated_df)
-        scaled_concated_df = pd.DataFrame(scaled_concated_ndarray, columns = ['mercX', 'mercY'])
+        scaled_concated_df = pd.DataFrame(scaled_concated_ndarray, columns = concated_df_column_list)
         
         scaled_df_list = []
         for df_len in df_length_list:
