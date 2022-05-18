@@ -7,10 +7,9 @@ from keras.preprocessing.sequence import pad_sequences
 
 class Preprocessor:
     
-    def __init__(self, dataframe_list:List[pd.DataFrame]):
-        self.dataframe_list = dataframe_list
+    def __init__(self):
         self.random_seed = 10
-        self.padding_max_length = 6400
+        self.padding_max_length = 1000
         self.scaler_name2scaler_class = {
             "standard": StandardScaler,
             "normalizer": Normalizer,
@@ -22,9 +21,9 @@ class Preprocessor:
         np.random.seed(self.random_seed)
         tf.random.set_seed(self.random_seed)
         
-    def add_padding(self) -> List[pd.DataFrame]:
+    def add_padding(self, data_frame_list: List[pd.DataFrame]) -> List[pd.DataFrame]:
         padded_data_list = pad_sequences(
-            self.dataframe_list,
+            data_frame_list,
             padding='post',
             maxlen=self.padding_max_length,
             dtype='float64'

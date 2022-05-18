@@ -39,7 +39,7 @@ class Data_loader:
                            'wQmN5JirFEdKQb00Cnaz7CvmYOp1']
         
     def load_datasets(self) -> List[pd.DataFrame]:
-        data_list = []
+        dataframe_list = []
         
         for user_hash in self.users_hash:
             files_dir = self.log_segment_info_path + user_hash
@@ -58,8 +58,8 @@ class Data_loader:
                     if len(file_df) == 0:
                         print(f"❗ Warning: [{file_path}]'s log length is zero")
                         continue
-                    data_list.append(file_df)
+                    dataframe_list.append(file_df)
                 except Exception as error_message:
                     print(error_message)
                     
-        return data_list
+        return dataframe_list

@@ -39,7 +39,7 @@ class Plotter:
         plt.title("Density Plot of the data")
         plt.show()
         
-def find_bins(observations: List, width: float):
+def find_bins(observations: List, width: float) -> np.ndarray:
     minimmum = np.min(observations)
     maximmum = np.max(observations)
     bound_min = -1.0 * (minimmum % width - minimmum)

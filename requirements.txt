@@ -5,3 +5,16 @@ conda install seaborn
 conda install kde
 conda install keras
 conda install scikit-learn
+conda uninstall numpy
+pip install numpy==1.19.1
+conda install pandas
+
+
+================ new Sibbal ================
+conda install numpy==1.19
+conda install tensorflow
+conda install pandas
+conda install seaborn
+conda install kde
+conda install keras
+conda install scikit-learn
