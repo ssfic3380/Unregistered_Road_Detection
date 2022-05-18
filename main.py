@@ -7,34 +7,39 @@ from src.plotter import Plotter
 from src.modeling import Modeller
 
 def main():
+    
     # Data load
     loader = Data_loader()
     dataframe_list = loader.load_datasets()
+    train_list, test_list = loader.split_datasets(dataframe_list, train_ratio = 0.8)
+    print(f"◽ Total dataset length : {len(dataframe_list)}")
+    print(f"◽ Training dataset length : {len(train_list)}")
+    print(f"◽ Test dataset length : {len(test_list)}")
+    print(f"◽ Sample Dataframe shape : {train_list[0].shape} (❗ Each dataframe can have a different length)")
     print(f"✅ Data load done")
     
-    # Data preprocesse
+    # #Plot dataframe_list to see distribution
+    # plotter = Plotter(dataframe_list)
+    # plotter.plot_distribution()
+    # print(f"✅ Data visualize done")
+    
+    # Data preprocess
     preprocessor = Preprocessor()
     preprocessor.set_random_seed()
-    scaled_dataframe_list = preprocessor.apply_scaling(dataframe_list, 'minmax') # could be 'standard', 'normalizer', 'minmax'
+    scaled_dataframe_list = preprocessor.apply_scaling(dataframe_list, 'minmax') # could be 'standard', 'normalizer', 'minmax', 'robust'
     
-    # Plot dataframe_list to see distribution
-    #plotter = Plotter(dataframe_list)
-    #plotter.plot_distribution()
-    #print(f"✅ Data visualize done")
+    exit()
     
     # padding
     padded_data_list = preprocessor.add_padding(scaled_dataframe_list)
     print(f"✅ Data preprocess done")
-    
-    # test print
-    #print(padded_data_list[0].head())
-    #print(f"❗ Sample : <data_list[0].index> == {dataframe_list[0].index}")
     
     # modeling
     modeller = Modeller(padded_data_list)
     model = modeller.train_model()
     modeller.get_prediction_of_model(model)
     modeller.evaluate_model(model)
+    print(f"✅ Modeling done")
     
 if __name__ == "__main__":
     main()

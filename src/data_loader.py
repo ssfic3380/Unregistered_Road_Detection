@@ -1,5 +1,5 @@
 from os import listdir
-from typing import List
+from typing import List, Tuple
 import pandas as pd
 
 class Data_loader:  
@@ -63,3 +63,9 @@ class Data_loader:
                     print(error_message)
                     
         return dataframe_list
+    
+    def split_datasets(self, data_frame_list:pd.DataFrame, train_ratio: float) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        train_end_idx = int(len(data_frame_list) * train_ratio)
+        train_datasets = data_frame_list[:train_end_idx]
+        test_datasets =  data_frame_list[train_end_idx:]
+        return train_datasets, test_datasets
