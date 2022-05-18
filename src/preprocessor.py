@@ -33,8 +33,8 @@ class Preprocessor:
     
     def apply_scaling(self, dataframe_list: List[pd.DataFrame], scaler_name:str) -> List[pd.DataFrame]:
         assert scaler_name in ['standard', 'normalizer', 'minmax'], "❗ Wrong input : Not 'standard', 'normalizer', 'minmax'"
-
-        scaler = self.scaler_name2scaler_class.get(scaler_name)()
+        selected_scaler_class = self.scaler_name2scaler_class.get(scaler_name)
+        scaler = selected_scaler_class()
         scaled_df_list = [scaler.fit_transform(df) for df in dataframe_list]
         return scaled_df_list
         

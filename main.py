@@ -1,26 +1,30 @@
-from data_loader import Data_loader
-from preprocessor import Preprocessor
-from plotter import Plotter
+from src.data_loader import Data_loader
+from src.preprocessor import Preprocessor
+from src.plotter import Plotter
 
-if __name__ == "__main__":
-    
-    # 데이터 불러오기
+def main():
+    # Data load
     loader = Data_loader()
     dataframe_list = loader.load_datasets()
     print(f"✅ Data load done")
     
-    # 전처리 하기
+    # Data preprocesse
     preprocessor = Preprocessor(dataframe_list)
     preprocessor.set_random_seed()
-    preprocessor.apply_scaling(dataframe_list, '추가행')
+    preprocessor.apply_scaling(dataframe_list, 'minmax') # could be 'standard', 'normalizer', 'minmax'
     print(f"✅ Data preprocess done")
     
-    # data 길이의 분포 알아보기
+    # Plot dataframe_list to see distribution
     plotter = Plotter(dataframe_list)
     plotter.plot_distribution()
     print(f"✅ Data visualize done")
     
-    # 선택된 길이에 맞춰서 padding 수행
+    # padding
     padded_data_list = preprocessor.add_padding()
     
+    # test print
+    print(padded_data_list[0].head())
     print(f"❗ Sample : <data_list[0].index> == {dataframe_list[0].index}")
+    
+if __name__ == "__main__":
+    main()
