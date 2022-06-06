@@ -1,10 +1,13 @@
 from typing import List
+
+import folium
+import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set(color_codes=True)
-import statistics
-import matplotlib.pyplot as plt
+
 import numpy as np
 import pandas as pd
+import statistics
 from scipy.stats import kde
 
 class Plotter:
@@ -14,6 +17,9 @@ class Plotter:
         self.data_len_list = [len(data) for data in self.dataframe_list]
         self.mean = statistics.mean(self.data_len_list)
         self.std = statistics.stdev(self.data_len_list)
+
+        self.colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'brown']
+        self.map_path = '../prev_src/maps_hys/'
 
 
     def plot_distribution(self) -> None:        
@@ -30,8 +36,55 @@ class Plotter:
         plt.title('Histogram')
         plt.show()
 
+
     def get_length(self) -> int:
         return int(self.mean + 0.5*self.std)
+
+
+    def plot_multi_route(self, data_list: List[pd.DataFrame], save_file_name: str) -> None:
+        map_osm = folium.Map(location=[37.6257746354002, 126.817219583318], zoom_start=12)
+        cnt = 0
+
+        routes = []
+        for data in data_list:
+            for lat_long in data:
+                if lat_long[0] == 0:
+                    continue
+                else:
+                    routes.append(lat_long)
+        
+            for index in range(len(routes) - 1):
+                loc = [routes[index], routes[index+1]]
+                folium.PolyLine(loc,
+                                color=self.colors[cnt%8],
+                                weight=5,
+                                opacity=0.8).add_to(map_osm)
+            cnt = cnt + 1
+        
+        map_osm.save(self.map_path + save_file_name + '.html')
+
+
+    def plot_single_route(self, data_list: List[pd.DataFrame], save_file_name: str) -> None:
+        map_osm = folium.Map(location=[37.6257746354002, 126.817219583318], zoom_start=12)
+        cnt = 0
+
+        routes = []
+        for lat_long in data_list:
+            if lat_long[0] == 0:
+                continue
+            else:
+                routes.append(lat_long)
+        
+        for index in range(len(routes) - 1):
+            loc = [routes[index], routes[index+1]]
+            folium.PolyLine(loc,
+                            color=self.colors[cnt%8],
+                            weight=5,
+                            opacity=0.8).add_to(map_osm)
+
+        cnt = cnt + 1
+        
+        map_osm.save(self.map_path + save_file_name + '.html')
 
 
 def find_bins(observations: List, width: float) -> np.ndarray:

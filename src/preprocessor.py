@@ -14,7 +14,8 @@ class Preprocessor:
             "standard": StandardScaler,
             "normalizer": Normalizer,
             "minmax": MinMaxScaler,
-            "robust": RobustScaler  
+            "robust": RobustScaler,
+            "none": None
         }
         
 
@@ -35,11 +36,16 @@ class Preprocessor:
             maxlen=self.padding_max_length,
             dtype='float64'
             )
+        
+        print(f"◽ Total dataset shape : {np.shape(padded_data_list)}")
         return padded_data_list
 
 
     def apply_scaling(self, dataframe_list: List[pd.DataFrame], scaler_name: str) -> List[pd.DataFrame]:
         assert scaler_name in self.scaler_name2scaler_class.keys(), f"❗ Wrong input : {self.scaler_name2scaler_class.keys()} could be"
+        if (scaler_name == "none"):
+            return dataframe_list
+
         selected_scaler_class = self.scaler_name2scaler_class.get(scaler_name)
         scaler = selected_scaler_class()
         
