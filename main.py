@@ -6,10 +6,6 @@ from src.preprocessor import Preprocessor
 from src.plotter import Plotter
 from src.modeling import Modeller
 
-# 테스트용
-import pandas as pd
-import numpy as np
-
 def main():
 
     # for multiple datasets
@@ -21,16 +17,16 @@ def main():
     
     # Plot dataframe_list to see distribution
     plotter = Plotter(dataframe_list)
-    #plotter.plot_distribution()
+    plotter.plot_distribution()
     print(f"✅ Data visualize done")
     
     # Data preprocess
     preprocessor = Preprocessor()
     preprocessor.set_random_seed()
-    # scaling
+    # preprocess - scaling
     scaled_dataframe_list = preprocessor.apply_scaling(dataframe_list, 'none') # could be 'standard', 'normalizer', 'minmax', 'robust'
                                                                                # if you don't need scaling, 'none'
-    # padding
+    # preprocess - padding
     #max_length = plotter.get_length()
     max_length = 100 # 임시
     preprocessor.set_padding_max_length(max_length)
@@ -48,7 +44,7 @@ def main():
     plotter.plot_multi_route(padded_dataframe_list, "multi_actual")
     plotter.plot_multi_route(predicted_dataframe_list, "multi_predicted")    
     print(f"✅ Route visualize done")
-    exit()
+
 
 
     # for single dataset
@@ -64,9 +60,10 @@ def main():
     # Data preprocess
     preprocessor = Preprocessor()
     preprocessor.set_random_seed()
-    # scaling
+    # preprocess - scaling
     scaled_data_list = preprocessor.apply_scaling(temporalized_data_list, 'none') # could be 'standard', 'normalizer', 'minmax', 'robust'
                                                                                   # if you don't need scaling, 'none'
+    print(f"✅ Data preprocess done")
 
     # Modeling
     modeller = Modeller(scaled_data_list)

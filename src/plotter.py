@@ -37,6 +37,7 @@ class Plotter:
         plt.show()
 
 
+    # 평균 + 0.5표준편차 위치의 값을 padding 길이로 설정하기 위한 메소드
     def get_length(self) -> int:
         return int(self.mean + 0.5*self.std)
 
@@ -87,6 +88,7 @@ class Plotter:
         map_osm.save(self.map_path + save_file_name + '.html')
 
 
+# plot_distribution에 사용되는 메소드 (적절한 bins를 찾는 메소드)
 def find_bins(observations: List, width: float) -> np.ndarray:
     minimmum = np.min(observations)
     maximmum = np.max(observations)

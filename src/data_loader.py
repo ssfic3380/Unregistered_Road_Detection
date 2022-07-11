@@ -6,12 +6,15 @@ import numpy as np
 class Data_loader:  
     
     def __init__(self):
+        # log_segment_info의 경로 설정
         self.log_segment_info_path = '../prev_src/log_segment_info/'
+
+        # 사용할 column 설정
         #self.use_cols = ['mercX', 'mercY', 'latitude', 'longitude', 'direction', 'seg_lat1', 'seg_long1', 'seg_lat2', 'seg_long2']
         #self.use_cols = ['mercX', 'mercY', 'latitude', 'longitude', 'direction']
         self.use_cols = ['latitude', 'longitude']
 
-        # for multiple datasets
+        # 데이터셋을 여러개 사용할 때 사용
         self.users_hash = ['01WPXP7OfDQtMeFqczOs0yoKms32',
                            'OMmQkOhTgUfNdgJ6Hx9EPe7zReg1',
                            '2Ea7BdHDdPbCo4XngUzyIX2yBou1',
@@ -44,8 +47,8 @@ class Data_loader:
                            'wQmN5JirFEdKQb00Cnaz7CvmYOp1']
         #self.users_hash = ['0mnEB226qqgHE79KLEfxRj6fiEK2']
 
-        # for single dataset
-        self.window_size = 1
+        # 데이터셋을 1개만 사용할 때 설정
+        self.window_size = 3
         self.user_hash = '0mnEB226qqgHE79KLEfxRj6fiEK2'
         #self.log_segment_info_name = 'log641608610_segment_info.csv'
         self.log_segment_info_name = 'log636556604_segment_info.csv'
@@ -64,8 +67,6 @@ class Data_loader:
                     continue
                 
                 # load log files
-                #file_path = "/".join([files_dir, file_name])
-                #file_path = f"{files_dir}/{file_name}"
                 file_path = path.join(files_dir, file_name)
                 try:
                     file = pd.read_csv(file_path, usecols=self.use_cols)
@@ -110,6 +111,8 @@ class Data_loader:
         return train_datasets, test_datasets
 
     
+    # 데이터셋이 1개일 때 사용 / window size만큼 행을 묶어서 이후의 위치 정보를 함께 학습하도록 함
+    # ex) window_size=3: [0, 1, 2], [1, 2, 3], [2, 3, 4], ... 와 같이 묶어서 학습함
     def temporalize(self, original_data_list: np.array) -> np.array:
         temporalized_data_list = []
 
@@ -126,6 +129,7 @@ class Data_loader:
         return temporalized_data_list
 
 
+    # 데이터셋이 1개일 때 사용 / temporalize된 데이터셋을 원래대로 되돌림
     def untemporalize(self, temporalized_data_list: np.array) -> np.array:
         untemporalized_data_list = []
 

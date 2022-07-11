@@ -10,7 +10,7 @@ pip install numpy==1.19.1
 conda install pandas
 
 
-================ new Sibbal ================
+================ new ================
 conda install numpy==1.19
 conda install tensorflow
 conda install pandas
