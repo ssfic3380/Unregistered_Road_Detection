@@ -22,7 +22,7 @@ matching algorithm을 통해 가장 가까운 segment가 매칭되어 행마다 
 > Python, Keras
 
 ## 시도 
-> https://github.com/ssfic3380/Unregistered_Road_Detection/history
+> https://github.com/ssfic3380/Unregistered_Road_Detection/tree/main/history
 
 ## 결과 (실패)
 <p align="center">
