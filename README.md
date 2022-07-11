@@ -22,13 +22,15 @@ matching algorithm을 통해 가장 가까운 segment가 매칭되어 행마다 
 > Python, Keras
 
 ## 시도 
-> https://github.com/ssfic3380/Unregistered_Road_Detection/report
+> https://github.com/ssfic3380/Unregistered_Road_Detection/history
 
 ## 결과 (실패)
 <p align="center">
-  <img src="./report/original.png">
-  <img src="./report/restored.png">
+  <img src="./history/original.png">
+  <img src="./history/restored.png">
 </p>
 
 ## 한계점
-* 
+* 교수님의 지도를 받으며 LSTM에 대해서 학습했지만, 이해가 부족했다.
+* 각 경로의 embedding을 생성하여 입력 데이터로 사용해보지 못했다.
+* 이상 탐지 외에 다른 방법을 사용해보지 못했다.
